@@ -2165,27 +2165,124 @@
           </div>
         </div>
 
-        <div class="callout warn">
-          <div class="ico">⚠</div>
-          <p>
-            <strong>運用は「導入して終わり」ではない。</strong>
-            Human-in-the-Loop (継続的レビュー)、LLMOps (品質・ドリフト監視)、
-            Prompt Injection 等の新セキュリティ脅威への対応、そして
-            <b>リーガル・リスク・コンプライアンス部門との早期連携</b>
-            が Executive レベルの必須事項となる。
-          </p>
+        <h3>ベテランの暗黙知を AI に蒸留する仕組み</h3>
+        <p>熟練したオペレーターには、マニュアルに書ききれない暗黙知がある:</p>
+        <ul>
+          <li>「この画面ではスクロールして全ページを確認する」</li>
+          <li>「この種類の取引では切り捨てではなく四捨五入」</li>
+          <li>「この顧客タイプは追加の本人確認が必要」</li>
+        </ul>
+        <p>
+          これらは退職や異動でしばしば失われる、銀行の競争力の核心と言える
+          ノウハウ。AI Agent / Computer Use
+          系の業務自動化フレームワークは、こうした暗黙知を AI
+          ナレッジに蒸留する仕組みを設計できる。典型的な 5 step メカニズム:
+        </p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 240px">ステップ</th>
+                <th>内容</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>1. 基本マニュアル投入</b></td>
+                <td>既存業務マニュアルを AI に読み込ませ、各手順を構造化</td>
+              </tr>
+              <tr>
+                <td><b>2. 人間承認下で実行</b></td>
+                <td>AI が業務を実行、各重要ステップで担当者が確認・承認</td>
+              </tr>
+              <tr>
+                <td><b>3. 修正コメントの蓄積</b></td>
+                <td>
+                  AI
+                  が誤った操作をした際、担当者が「ここは切り捨て」等の修正コメントをその場で残す
+                </td>
+              </tr>
+              <tr>
+                <td><b>4. HITL レビュー → 業務マニュアル正式更新</b></td>
+                <td>
+                  蓄積された修正コメントを人間 (担当者・業務責任者)
+                  がレビューし、正式に承認。承認された内容を業務マニュアルに反映し、組織のナレッジとして公式化する
+                  <b>継続改善ループ</b>
+                </td>
+              </tr>
+              <tr>
+                <td><b>5. 信頼度の段階的進化</b></td>
+                <td>
+                  一定期間正確な処理が続いた業務は、承認ポイントを段階的に削減
+                  (supervised → checkpoint → autonomous)
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
-        <div class="callout tip">
-          <div class="ico">◆</div>
-          <p>
-            <strong>ベテランの暗黙知を AI に蒸留する仕組み</strong>
-            が競争力の核。 マニュアル投入 → 人間承認下で実行 → 修正コメント蓄積
-            → Human-in-the-Loop レビューで 正式マニュアル更新 →
-            段階的に信頼度上昇 (supervised → checkpoint → autonomous)。
-            この継続改善ループで <b>退職・異動によるノウハウ喪失を防ぐ</b>。
-          </p>
+        <p style="margin-top: 20px">
+          <b>この仕組みの構造的優位性:</b>
+        </p>
+        <ul>
+          <li>
+            <b>教育コストが担当者数に比例しない</b>
+            — 一度承認・反映されたナレッジは全 AI エージェントに即座に共有される
+          </li>
+          <li>
+            <b>退職・異動によるノウハウ喪失が発生しない</b>
+            — 蓄積されたナレッジは組織資産として残る
+          </li>
+          <li>
+            <b>継続的な精度向上</b>
+            — 運用を通じて精度が向上する構造 (修正 → HITL 承認 → マニュアル更新
+            → 全体品質底上げのループ)
+          </li>
+        </ul>
+
+        <h3>運用上の重要事項: HITL・LLMOps・新セキュリティ脅威</h3>
+        <p class="lead">
+          AI
+          は「導入して終わり」ではない。<b>運用中に継続改善し、新たな脅威に対応する仕組み</b>が
+          Executive レベルの必須事項となる。
+        </p>
+
+        <div class="foundation" style="grid-template-columns: repeat(3, 1fr)">
+          <div class="f-item">
+            <h4>Human-in-the-Loop (HITL)</h4>
+            <p>
+              AI
+              の出力を人間が定期的にサンプリングレビューし、誤りや偏りを検出、修正フィードバックを
+              AI に戻す。重要判断 (融資、不正、KYC) では必須。
+              <b>AI に任せきりにしないこと自体がリスク管理の要</b>。
+            </p>
+          </div>
+          <div class="f-item">
+            <h4>LLMOps</h4>
+            <p>
+              MLOps の AI
+              時代版。出力品質・ハルシネーション発生率・応答時間・モデルドリフトを監視。自動
+              logging + 異常検知アラート + A/B テスト基盤 +
+              再学習サイクル。<b>品質劣化に気づかないことが最大リスク</b>。
+            </p>
+          </div>
+          <div class="f-item">
+            <h4>新セキュリティ脅威 (Prompt Injection 等)</h4>
+            <p>
+              悪意のある入力で AI の挙動を乗っ取る Prompt
+              Injection、学習データ漏洩、Adversarial Inputs。対策は入力検証 +
+              出力フィルタ + 権限分離 + 監査ログ +
+              <b>Red Team 定期シミュレーション</b>。
+            </p>
+          </div>
         </div>
+
+        <p style="font-size: 13.5px; margin-top: 16px">
+          <b>Executive レベルの重要性:</b> AI 固有の脅威モデルを
+          <b>CIO / CISO / 法務</b>
+          連携で構築する必要あり、従来のセキュリティ部門だけでは検知も対応も困難。
+        </p>
       </section>
 
       <!-- Industry Quant -->
