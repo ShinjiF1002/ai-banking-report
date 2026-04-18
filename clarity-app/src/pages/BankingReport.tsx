@@ -465,8 +465,25 @@ function CitationsFooter() {
         ))}
       </ol>
 
-      <div className="mt-10 rounded-md border border-border bg-muted/40 p-5 text-xs text-muted-foreground">
-        Clarity view · built with Clarity design system v0.1.0 (S1 Parallel Alt-deploy) · 旧 HTML 版 は <a href="/ai-banking-report/" className="underline">/ai-banking-report/</a> で引き続き閲覧可能。
+      <nav className="mt-10 flex flex-col gap-3 border-t border-border pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <a href="/ai-banking-report/" className="text-primary hover:underline">
+          ← 旧 HTML 版
+        </a>
+        <a
+          href="/ai-banking-report/clarity/process-catalog/"
+          className="text-primary hover:underline"
+        >
+          Process Catalog POC (Clarity S2) →
+        </a>
+      </nav>
+
+      <div className="mt-6 rounded-md border border-border bg-muted/40 p-5 text-xs text-muted-foreground">
+        Clarity view · built with Clarity design system v0.1.0 (S1 Parallel Alt-deploy + S2
+        Process Catalog) · 旧 HTML 版 は{" "}
+        <a href="/ai-banking-report/" className="underline">
+          /ai-banking-report/
+        </a>{" "}
+        で引き続き閲覧可能。
       </div>
     </section>
   );

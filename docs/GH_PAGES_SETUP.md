@@ -27,13 +27,18 @@ git rm -rf .
 git show main:index.html > index.html
 git show main:ai_banking_landscape_jp.html > ai_banking_landscape_jp.html
 
-# Place the React build under /clarity/
+# Place the Clarity multi-entry React build under /clarity/.
+# Vite builds dist/index.html (banking) + dist/process-catalog/index.html (S2 POC)
+# and assets at dist/assets/. Copying dist/ as-is gives:
+#   /clarity/index.html                    (banking page)
+#   /clarity/process-catalog/index.html    (S2 POC page)
+#   /clarity/assets/...                    (shared bundle)
 mkdir -p clarity
 cp -R ../dist/. clarity/
 
 # Commit
 git add .
-git commit -m "chore(pages): dual content — old HTML root + Clarity React /clarity/"
+git commit -m "chore(pages): triple content — old HTML root + Clarity banking /clarity/ + Clarity S2 POC /clarity/process-catalog/"
 git push -u origin gh-pages
 
 # Cleanup
@@ -52,7 +57,8 @@ Allow 1-2 minutes for GitHub Pages to rebuild.
 
 **Resulting URLs**:
 - `https://shinjif1002.github.io/ai-banking-report/` → old HTML (unchanged visual)
-- `https://shinjif1002.github.io/ai-banking-report/clarity/` → Clarity React view
+- `https://shinjif1002.github.io/ai-banking-report/clarity/` → Clarity S1 banking React view
+- `https://shinjif1002.github.io/ai-banking-report/clarity/process-catalog/` → Clarity S2 BackofficeAI Process Catalog POC
 
 ## Update flow (re-deploy Clarity view)
 
