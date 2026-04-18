@@ -1,11 +1,12 @@
 # 米国大手グローバル銀行における AI 動向 — Executive 向け統合レポート
 
-25 情報源 (WEF / McKinsey / Deloitte / 各銀行公式 IR / Tier 1 通信社等) を統合した分析。Non-tech Executive を読者と想定し、「何が起きているか」「何を意思決定すべきか」に焦点を置いた 2 つの版を提供する。
+25 情報源 (WEF / McKinsey / Deloitte / 各銀行公式 IR / Tier 1 通信社等) を統合した分析。Non-tech Executive を読者と想定し、「何が起きているか」「何を意思決定すべきか」に焦点を置いた 3 つの版を提供する。
 
 ## 読む
 
 - **[📊 Web 版 (10 分ダイジェスト、推奨)](https://shinjif1002.github.io/ai-banking-report/)** — 洗練された HTML dashboard、全 25 citation が 1 click で一次出典に飛ぶ
-- **[📄 Markdown 詳細版 (全 References + 検証メモ付)](./ai_banking_landscape_analysis_jp.md)** — 838 行、出典別 Tier 分類、Citation 完全一致検証メモあり
+- **[🧪 Clarity view (React 再構築版、2026-04-18 追加)](https://shinjif1002.github.io/ai-banking-report/clarity/)** — Clarity design system で再構築した editorial landing page。Subtract / Visible / Signal / Smallest の 4 設計原則を同じ content で実践
+- **[📄 Markdown 詳細版 (全 References + 検証メモ付)](./ai_banking_landscape_analysis_jp.md)** — 891 行、出典別 Tier 分類、Citation 完全一致検証メモあり
 
 ## 構成
 
@@ -25,6 +26,15 @@
 
 全 25 References に **curl 200 OK で実ブラウザ閲覧可能な URL が 1 本以上** 含まれる状態で公開 (一部 primary URL は bot block を受けるが、併記された mirror URL で必ず到達可能)。Forrester / Gartner のみ premium 購読が必要な詳細レポートは補足として併記し、無料 blog / press release を primary に設定している。
 
+## Clarity view について (branch: `clarity-react-view`)
+
+2026-04-18 に `@clarity-ds/core` (Clarity design system v0.1.0) で再構築した React 版を追加。旧 HTML と併存する alternative view として `/clarity/` subpath に配置。
+
+- **Deploy**: [docs/GH_PAGES_SETUP.md](./docs/GH_PAGES_SETUP.md) に gh-pages branch dual content の setup 手順
+- **スタック**: Vite 8 + React 19 + TypeScript + Tailwind v4 + @clarity-ds/core (file: symlink)
+- **ソース**: [clarity-app/](./clarity-app/) (Vite root)
+- **Content data**: `clarity-app/src/data/banking-report.ts` (markdown の structured derivation、snapshot 2026-04-17)
+
 ## 最終更新
 
-2026-04-17
+2026-04-18
