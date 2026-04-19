@@ -20,5 +20,10 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["clarity-app/src", "vite.config.ts"]
+  "include": [
+    "clarity-app/src",
+    "clarity-app/process-catalog/src",
+    "clarity-app/saas-dashboard/src",
+    "vite.config.ts"
+  ]
 }

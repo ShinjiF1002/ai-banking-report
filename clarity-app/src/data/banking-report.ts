@@ -91,6 +91,95 @@ export interface HeroStat {
   hint?: string;
 }
 
+// §tldr — executive summary 3 items (rich prose authored inline in page)
+export interface TldrItem {
+  n: string; // "01"
+  tagline: string; // "加速"
+  headline: string; // "AI は本番運用フェーズへ"
+  /** Content key — page author inlines prose against this key */
+  contentKey: "accelerate" | "prove" | "discipline";
+}
+
+// §integration — connection patterns + fallbacks + foundations + HITL + ops
+export interface IntegrationPattern {
+  id: string;
+  tag: string; // "本命" | "次点" | "新興"
+  tagTone: "primary" | "neutral" | "info";
+  title: string; // "① API 連携"
+  subtitle: string; // "Established · 中長期の唯一の本命"
+  contentKey: "api" | "mq" | "agent"; // page author inlines body prose
+  defList: { term: string; detail: string }[];
+}
+
+export interface IntegrationFallbackAspect {
+  aspect: string; // "位置付け" / "データ鮮度" / etc
+  rpa: string;
+  dbCopy: string;
+}
+
+export interface IntegrationFoundation {
+  n: string; // "01"
+  title: string; // "データインフラ"
+  contentKey:
+    | "data-infra"
+    | "manual-structure"
+    | "approval-audit"
+    | "trust-model";
+}
+
+export interface HITLStep {
+  step: number; // 1-5
+  title: string; // "基本マニュアル投入"
+  detail: string;
+}
+
+export interface IntegrationOpsItem {
+  title: string; // "Human-in-the-Loop (HITL)"
+  contentKey: "hitl" | "llmops" | "security";
+}
+
+export interface IntegrationBlock {
+  patterns: IntegrationPattern[];
+  fallbackAspects: IntegrationFallbackAspect[];
+  foundations: IntegrationFoundation[];
+  hitlSteps: HITLStep[];
+  ops: IntegrationOpsItem[];
+}
+
+// §players — JPMC 4-year AI trajectory
+export interface JpmcTimelineEntry {
+  year: string;
+  milestone: string;
+  value: string;
+}
+
+// §principles — Moat comparison (JPMC vs regional)
+export interface MoatDimension {
+  dimension: string;
+  leader: string;
+  regional: string;
+}
+
+// §why-now — AI investment surge metrics table (7 rows)
+export interface WhyNowMetric {
+  indicator: string;
+  value: string;
+  sub?: string;
+  subTone?: "muted" | "up";
+  citationId: number;
+  source: string;
+}
+
+// §closing — narrative + 3 self-assessment questions
+export interface ClosingQuestion {
+  n: number;
+  contentKey: "audit" | "governance" | "distill";
+}
+
+export interface ClosingBlock {
+  questions: ClosingQuestion[];
+}
+
 export const hero = {
   title: "米国大手グローバル銀行における AI 動向",
   subtitle: "Executive 向け統合レポート",
@@ -212,11 +301,7 @@ export const players: PlayerKpi[] = [
   {
     bank: "HSBC",
     scaleIndicator: "DRA + 600 超 AI ユースケース",
-    metrics: [
-      "AML 誤検知 60% 削減",
-      "検知率 2-4 倍向上",
-      "月間 9-10 億件監視",
-    ],
+    metrics: ["AML 誤検知 60% 削減", "検知率 2-4 倍向上", "月間 9-10 億件監視"],
     evidentRank: 8,
     tier: "T1",
     citationIds: [14],
@@ -246,10 +331,7 @@ export const players: PlayerKpi[] = [
   {
     bank: "COF",
     scaleIndicator: "ProtectID + Chat Concierge",
-    metrics: [
-      "AI 推論コスト 1,000 倍超削減 (22 ヶ月)",
-      "検索精度 84% → 93%",
-    ],
+    metrics: ["AI 推論コスト 1,000 倍超削減 (22 ヶ月)", "検索精度 84% → 93%"],
     evidentRank: 2,
     tier: "T1",
     citationIds: [17],
@@ -257,8 +339,16 @@ export const players: PlayerKpi[] = [
 ];
 
 export const evidentTop10 = [
-  { rank: 1, bank: "JPMC", note: "Innovation / Leadership / Transparency 3 ピラー首位" },
-  { rank: 2, bank: "COF", note: "Talent ピラー首位、+9.6pt 上昇 (Top 10 最大)" },
+  {
+    rank: 1,
+    bank: "JPMC",
+    note: "Innovation / Leadership / Transparency 3 ピラー首位",
+  },
+  {
+    rank: 2,
+    bank: "COF",
+    note: "Talent ピラー首位、+9.6pt 上昇 (Top 10 最大)",
+  },
   { rank: 3, bank: "Royal Bank of Canada" },
   { rank: 4, bank: "CommBank", note: "オーストラリア" },
   { rank: 5, bank: "MS" },
@@ -280,7 +370,8 @@ export const roiDomains: RoiDomain[] = [
       {
         bank: "JPMC",
         useCase: "リアルタイム不正取引監視",
-        result: "検知精度 40% 向上 / 誤検知 50% 削減 / 累計 $15 億超防止 / 日次 10 億件監視",
+        result:
+          "検知精度 40% 向上 / 誤検知 50% 削減 / 累計 $15 億超防止 / 日次 10 億件監視",
         tier: "T1",
         citationIds: [5],
       },
@@ -325,7 +416,8 @@ export const roiDomains: RoiDomain[] = [
     id: "cs",
     name: "カスタマーサービス",
     emoji: "🟠",
-    benchmark: "自動化対応 $1-2/件 vs 人間 $6-14 / 応答 65% 高速化 / コンテイメント 60-80%",
+    benchmark:
+      "自動化対応 $1-2/件 vs 人間 $6-14 / 応答 65% 高速化 / コンテイメント 60-80%",
     maturity: "proven",
     rows: [
       {
@@ -419,7 +511,13 @@ export const roiDomains: RoiDomain[] = [
 ];
 
 // Summary of remaining 4 ROI domains (compressed per plan L3)
-export const roiDomainsSummary: { id: string; name: string; emoji: string; note: string; citationIds: number[] }[] = [
+export const roiDomainsSummary: {
+  id: string;
+  name: string;
+  emoji: string;
+  note: string;
+  citationIds: number[];
+}[] = [
   {
     id: "wealth",
     name: "ウェルスマネジメント",
@@ -451,21 +549,100 @@ export const roiDomainsSummary: { id: string; name: string; emoji: string; note:
 ];
 
 export const consulting: ConsultingBenchmark[] = [
-  { firm: "McKinsey", indicator: "GenAI 年間価値 (銀行業界)", value: "$2,000-3,400 億", citationId: 4 },
-  { firm: "McKinsey", indicator: "AI + 高度アナリティクス 年間価値", value: "$2 兆", note: "銀行全体", citationId: 4 },
-  { firm: "McKinsey", indicator: "エージェント型 AI コスト削減", value: "15-20%", note: "ミドル・バック", citationId: 4 },
-  { firm: "McKinsey", indicator: "未対応時の利益侵食", value: "$1,700 億", note: "世界銀行利益の約 9%", citationId: 4 },
-  { firm: "McKinsey", indicator: "AI 先行者 ROTE 優位", value: "4pp", citationId: 4 },
-  { firm: "Accenture", indicator: "早期導入行の 3 年収益増", value: "4.9%", citationId: 3 },
-  { firm: "Accenture", indicator: "早期導入行の 3 年コスト減", value: "7.7%", citationId: 3 },
-  { firm: "Accenture", indicator: "早期導入行の税引前利益成長", value: "29%", citationId: 3 },
-  { firm: "Accenture", indicator: "AI 規模化成功率", value: "34%", citationId: 3 },
-  { firm: "Deloitte", indicator: "営業利益率改善 (2-3 年)", value: "5-7%", citationId: 20 },
-  { firm: "Deloitte", indicator: "営業利益率改善 (5-7 年)", value: "10-15%", citationId: 20 },
-  { firm: "Deloitte", indicator: "AI/ML 運用銀行比率", value: "67%", note: "2025 年", citationId: 20 },
-  { firm: "世銀/IMF/BIS", indicator: "AI 不正検知精度", value: "90% 超", citationId: 2 },
-  { firm: "世銀/IMF/BIS", indicator: "AI 運用リスク削減", value: "35%", citationId: 2 },
-  { firm: "世銀/IMF/BIS", indicator: "AI ローン処理時間短縮", value: "最大 78%", citationId: 2 },
+  {
+    firm: "McKinsey",
+    indicator: "GenAI 年間価値 (銀行業界)",
+    value: "$2,000-3,400 億",
+    citationId: 4,
+  },
+  {
+    firm: "McKinsey",
+    indicator: "AI + 高度アナリティクス 年間価値",
+    value: "$2 兆",
+    note: "銀行全体",
+    citationId: 4,
+  },
+  {
+    firm: "McKinsey",
+    indicator: "エージェント型 AI コスト削減",
+    value: "15-20%",
+    note: "ミドル・バック",
+    citationId: 4,
+  },
+  {
+    firm: "McKinsey",
+    indicator: "未対応時の利益侵食",
+    value: "$1,700 億",
+    note: "世界銀行利益の約 9%",
+    citationId: 4,
+  },
+  {
+    firm: "McKinsey",
+    indicator: "AI 先行者 ROTE 優位",
+    value: "4pp",
+    citationId: 4,
+  },
+  {
+    firm: "Accenture",
+    indicator: "早期導入行の 3 年収益増",
+    value: "4.9%",
+    citationId: 3,
+  },
+  {
+    firm: "Accenture",
+    indicator: "早期導入行の 3 年コスト減",
+    value: "7.7%",
+    citationId: 3,
+  },
+  {
+    firm: "Accenture",
+    indicator: "早期導入行の税引前利益成長",
+    value: "29%",
+    citationId: 3,
+  },
+  {
+    firm: "Accenture",
+    indicator: "AI 規模化成功率",
+    value: "34%",
+    citationId: 3,
+  },
+  {
+    firm: "Deloitte",
+    indicator: "営業利益率改善 (2-3 年)",
+    value: "5-7%",
+    citationId: 20,
+  },
+  {
+    firm: "Deloitte",
+    indicator: "営業利益率改善 (5-7 年)",
+    value: "10-15%",
+    citationId: 20,
+  },
+  {
+    firm: "Deloitte",
+    indicator: "AI/ML 運用銀行比率",
+    value: "67%",
+    note: "2025 年",
+    citationId: 20,
+  },
+  {
+    firm: "世銀/IMF/BIS",
+    indicator: "AI 不正検知精度",
+    value: "90% 超",
+    citationId: 2,
+  },
+  {
+    firm: "世銀/IMF/BIS",
+    indicator: "AI 運用リスク削減",
+    value: "35%",
+    citationId: 2,
+  },
+  {
+    firm: "世銀/IMF/BIS",
+    indicator: "AI ローン処理時間短縮",
+    value: "最大 78%",
+    citationId: 2,
+  },
 ];
 
 export const timeline: TimelineEntry[] = [
@@ -543,8 +720,7 @@ export const principles: StrategicPrinciple[] = [
   {
     n: 4,
     title: "リターンに先行して投資せよ",
-    rationale:
-      "JPMC: $198 億。ABA: AI 不採用リスクが採用リスクを上回る。",
+    rationale: "JPMC: $198 億。ABA: AI 不採用リスクが採用リスクを上回る。",
     citationIds: [5, 23],
   },
   {
@@ -577,7 +753,8 @@ export const sources: Source[] = [
     publisher: "WEF / Accenture",
     date: "2025 年 1 月",
     tier: "T2",
-    summary: "業界別 AI インパクト表 (銀行 73%) / ガバナンス FW 導入率 84% / 業界 AI 支出 $350億→$970億 等の数値ソース。",
+    summary:
+      "業界別 AI インパクト表 (銀行 73%) / ガバナンス FW 導入率 84% / 業界 AI 支出 $350億→$970億 等の数値ソース。",
     url: "https://reports.weforum.org/docs/WEF_Artificial_Intelligence_in_Financial_Services_2025.pdf",
   },
   {
@@ -586,7 +763,8 @@ export const sources: Source[] = [
     publisher: "World Bank / IMF / BIS / FSB",
     date: "2024-2026",
     tier: "T1",
-    summary: "FSB/IMF/BIS の 5 一次情報を統合。IMF ヘルド行動警告・BIS 自律時代を含む。",
+    summary:
+      "FSB/IMF/BIS の 5 一次情報を統合。IMF ヘルド行動警告・BIS 自律時代を含む。",
     url: "https://www.fsb.org/uploads/P14112024.pdf",
   },
   {
@@ -595,7 +773,8 @@ export const sources: Source[] = [
     publisher: "Accenture",
     date: "2025 年 12 月",
     tier: "T2",
-    summary: "早期 AI 導入行 3 年収益 +4.9% / コスト -7.7% / 税引前利益 +29% / ROE +125bps / CIR +452bps。",
+    summary:
+      "早期 AI 導入行 3 年収益 +4.9% / コスト -7.7% / 税引前利益 +29% / ROE +125bps / CIR +452bps。",
     url: "https://www.accenture.com/content/dam/accenture/final/industry/banking/document/Banking-Top-Trends-FY26-Report-Final.pdf",
   },
   {
@@ -604,7 +783,8 @@ export const sources: Source[] = [
     publisher: "McKinsey & Company",
     date: "2025-11-21",
     tier: "T2",
-    summary: "エージェント型 AI が低金利預金を移動させる $1,700 億利益侵食 / GenAI 年間価値 $2,000-3,400 億 / 先行者 ROTE +4pp。",
+    summary:
+      "エージェント型 AI が低金利預金を移動させる $1,700 億利益侵食 / GenAI 年間価値 $2,000-3,400 億 / 先行者 ROTE +4pp。",
     url: "https://www.mckinsey.com/industries/financial-services/our-insights/banking-matters/agentic-ai-will-shake-up-banking-shrinking-global-profit-pools",
   },
   {
@@ -613,7 +793,8 @@ export const sources: Source[] = [
     publisher: "JPMorgan Chase",
     date: "2025-2026",
     tier: "T1",
-    summary: "$20 億 AI ビジネス価値、$198 億 テック予算、1:1 ROI、ROTCE、LLM Suite 20 万人展開、450+ ユースケース等。",
+    summary:
+      "$20 億 AI ビジネス価値、$198 億 テック予算、1:1 ROI、ROTCE、LLM Suite 20 万人展開、450+ ユースケース等。",
     url: "https://www.jpmorganchase.com/ir/annual-report/2025/ar-ceo-letters",
   },
   {
@@ -622,16 +803,19 @@ export const sources: Source[] = [
     publisher: "Brewton, R. (LinkedIn Pulse 分析記事)",
     date: "2026-01-27",
     tier: "T3",
-    summary: "JPMC 公式開示 (T1) から AI ビジネス価値 $20 億、ユースケース数、テック予算等を整理。",
+    summary:
+      "JPMC 公式開示 (T1) から AI ビジネス価値 $20 億、ユースケース数、テック予算等を整理。",
     url: "https://www.linkedin.com/pulse/operating-leaders-how-jp-morgan-chase-showed-rest-us-what-brewton-qveyf/",
   },
   {
     id: 7,
-    title: "BofA AI and Digital Innovations Fuel 30 Billion Client Interactions",
+    title:
+      "BofA AI and Digital Innovations Fuel 30 Billion Client Interactions",
     publisher: "Bank of America Newsroom",
     date: "2026-03-10",
     tier: "T1",
-    summary: "累計 32 億回 Erica 対話 / 年間 300 億回デジタルインタラクション (前年比 14% 増)。",
+    summary:
+      "累計 32 億回 Erica 対話 / 年間 300 億回デジタルインタラクション (前年比 14% 増)。",
     url: "https://newsroom.bankofamerica.com/content/newsroom/press-releases/2026/03/bofa-ai-and-digital-innovations-fuel-30-billion-client-interacti.html",
   },
   {
@@ -649,7 +833,8 @@ export const sources: Source[] = [
     publisher: "Wells Fargo Newsroom",
     date: "2026-03-26",
     tier: "T1",
-    summary: "Fargo 対話回数 10 億回超、モバイル 3,300 万人、スペイン語 300 万人超、アプリ評価 4.9。",
+    summary:
+      "Fargo 対話回数 10 億回超、モバイル 3,300 万人、スペイン語 300 万人超、アプリ評価 4.9。",
     url: "https://newsroom.wf.com/news-releases/news-details/2026/Wells-Fargo-Reaches-Major-Digital-Milestones/default.aspx",
   },
   {
@@ -667,7 +852,8 @@ export const sources: Source[] = [
     publisher: "Citigroup",
     date: "2026-04-14",
     tier: "T1",
-    summary: "Markets 月間 1,700 時間創出、コンプラ誤検知 30-40% 削減、レガシー 30 年→2 日。",
+    summary:
+      "Markets 月間 1,700 時間創出、コンプラ誤検知 30-40% 削減、レガシー 30 年→2 日。",
     url: "https://www.citigroup.com/rcs/citigpa/storage/public/Earnings/Q12026/2026psqtr1rslt.pdf",
   },
   {
@@ -676,7 +862,8 @@ export const sources: Source[] = [
     publisher: "CNBC",
     date: "2026-02-06",
     tier: "T3",
-    summary: "GS CIO Marco Argenti: Devin (Anthropic 共同開発)、Expert AI、開発者生産性 3-4 倍、GenAI 労働生産性 +15%。",
+    summary:
+      "GS CIO Marco Argenti: Devin (Anthropic 共同開発)、Expert AI、開発者生産性 3-4 倍、GenAI 労働生産性 +15%。",
     url: "https://www.cnbc.com/2026/02/06/anthropic-goldman-sachs-ai-model-accounting.html",
   },
   {
@@ -685,7 +872,8 @@ export const sources: Source[] = [
     publisher: "Morgan Stanley",
     date: "2025-2026",
     tier: "T3",
-    summary: "Debrief 会議要約 AI / FA 98% 日常利用 / AI 導入 1 年以上企業 生産性 +11.5% / ヘッドカウント -4%。",
+    summary:
+      "Debrief 会議要約 AI / FA 98% 日常利用 / AI 導入 1 年以上企業 生産性 +11.5% / ヘッドカウント -4%。",
     url: "https://www.morganstanley.com/press-releases/ai-at-morgan-stanley-debrief-launch",
   },
   {
@@ -694,7 +882,8 @@ export const sources: Source[] = [
     publisher: "Google Cloud + HSBC",
     date: "2025-2026",
     tier: "T1",
-    summary: "DRA 誤検知 60% 削減、検知 2-4 倍、月間 9-10 億件監視、調査完了数週間→数日。",
+    summary:
+      "DRA 誤検知 60% 削減、検知 2-4 倍、月間 9-10 億件監視、調査完了数週間→数日。",
     url: "https://cloud.google.com/blog/topics/financial-services/how-hsbc-fights-money-launderers-with-artificial-intelligence",
   },
   {
@@ -703,7 +892,8 @@ export const sources: Source[] = [
     publisher: "DBS Bank",
     date: "2025",
     tier: "T1",
-    summary: "AI 経済価値 S$1B 監査済み、2,000+ モデル / 430+ UC / 顧客満足度 +23% / システムインシデント -81%。",
+    summary:
+      "AI 経済価値 S$1B 監査済み、2,000+ モデル / 430+ UC / 顧客満足度 +23% / システムインシデント -81%。",
     url: "https://www.dbs.com/annualreports/2025/index.html",
   },
   {
@@ -712,7 +902,8 @@ export const sources: Source[] = [
     publisher: "Standard Chartered",
     date: "2025-03-27",
     tier: "T3",
-    summary: "SC GPT 70,000 名体制、41 市場展開。規制違反 40%↓ / リスク工数 30%↓ / モデル配備 4×。",
+    summary:
+      "SC GPT 70,000 名体制、41 市場展開。規制違反 40%↓ / リスク工数 30%↓ / モデル配備 4×。",
     url: "https://www.sc.com/en/press-release/standard-chartered-rolls-out-sc-gpt-advancing-ai-driven-innovation-in-banking/",
   },
   {
@@ -721,16 +912,19 @@ export const sources: Source[] = [
     publisher: "Capital One Newsroom",
     date: "2025-2026",
     tier: "T1",
-    summary: "ProtectID 2026 FinTech Breakthrough Award 受賞、AI 推論コスト 1,000× 削減。",
+    summary:
+      "ProtectID 2026 FinTech Breakthrough Award 受賞、AI 推論コスト 1,000× 削減。",
     url: "https://www.capitalone.com/about/newsroom/",
   },
   {
     id: 18,
-    title: "Gartner: AI Regulations Fuel Billion-Dollar Market / Forrester blog",
+    title:
+      "Gartner: AI Regulations Fuel Billion-Dollar Market / Forrester blog",
     publisher: "Gartner / Forrester",
     date: "2025-2026",
     tier: "T2",
-    summary: "AI ガバナンスプラットフォーム市場 $10 億規模、ガバナンス効果 3.4×、パーソナライゼーション CLV 25-35%。",
+    summary:
+      "AI ガバナンスプラットフォーム市場 $10 億規模、ガバナンス効果 3.4×、パーソナライゼーション CLV 25-35%。",
     url: "https://www.gartner.com/en/newsroom/press-releases/2026-02-17-gartner-global-ai-regulations-fuel-billion-dollar-market-for-ai-governance-platforms",
   },
   {
@@ -739,7 +933,8 @@ export const sources: Source[] = [
     publisher: "Boston Consulting Group",
     date: "2026",
     tier: "T2",
-    summary: "リテール銀行のエージェント型 AI 活用、$370B profit potential by 2030。",
+    summary:
+      "リテール銀行のエージェント型 AI 活用、$370B profit potential by 2030。",
     url: "https://www.bcg.com/publications/2026/how-retail-banks-can-put-agentic-ai-to-work",
   },
   {
@@ -748,7 +943,8 @@ export const sources: Source[] = [
     publisher: "Deloitte",
     date: "2025-2026",
     tier: "T2",
-    summary: "AI 導入 営業利益率改善 5-7% (2-3年) / 10-15% (5-7年)、67% AI/ML 運用、最大障壁は脆弱・断片化したデータ基盤。",
+    summary:
+      "AI 導入 営業利益率改善 5-7% (2-3年) / 10-15% (5-7年)、67% AI/ML 運用、最大障壁は脆弱・断片化したデータ基盤。",
     url: "https://www.deloitte.com/us/en/insights/industry/financial-services/financial-services-industry-outlooks/banking-industry-outlook.html",
   },
   {
@@ -766,7 +962,8 @@ export const sources: Source[] = [
     publisher: "Stanford Digital Economy Lab",
     date: "2025-11-13",
     tier: "T2",
-    summary: "AI 影響職種 22-25 歳の雇用が 16% 相対減少 (2022-2025)、payroll 実データ実証研究。",
+    summary:
+      "AI 影響職種 22-25 歳の雇用が 16% 相対減少 (2022-2025)、payroll 実データ実証研究。",
     url: "https://digitaleconomy.stanford.edu/publications/canaries-in-the-coal-mine/",
   },
   {
@@ -784,7 +981,8 @@ export const sources: Source[] = [
     publisher: "U.S. Department of the Treasury",
     date: "2026-02-19",
     tier: "T1",
-    summary: "NIST AI RMF を金融向けカスタマイズ。230 統制目標を 4 成熟段階 (Initial 21 / Minimal 126 / Evolving 193 / Embedded 230) にマッピング。",
+    summary:
+      "NIST AI RMF を金融向けカスタマイズ。230 統制目標を 4 成熟段階 (Initial 21 / Minimal 126 / Evolving 193 / Embedded 230) にマッピング。",
     url: "https://home.treasury.gov/news/press-releases/sb0401",
   },
   {
@@ -793,20 +991,303 @@ export const sources: Source[] = [
     publisher: "Evident",
     date: "2025",
     tier: "T2",
-    summary: "Top 10 (JPMC/COF/RBC/CommBank/MS/WF/UBS/HSBC/GS/BofA)、4 ピラー (Talent 45% / Innovation 30% / Leadership 15% / Transparency 10%)。",
+    summary:
+      "Top 10 (JPMC/COF/RBC/CommBank/MS/WF/UBS/HSBC/GS/BofA)、4 ピラー (Talent 45% / Innovation 30% / Leadership 15% / Transparency 10%)。",
     url: "https://evidentinsights.com/bankingbrief/heres-the-2025-evident-ai-index/",
   },
 ];
 
+// =============================================================
+// §tldr — 3 executive summary items
+// =============================================================
+
+export const tldr: TldrItem[] = [
+  {
+    n: "01",
+    tagline: "加速",
+    headline: "AI は本番運用フェーズへ",
+    contentKey: "accelerate",
+  },
+  {
+    n: "02",
+    tagline: "実証",
+    headline: "ROI は「地味な業務」で既に証明",
+    contentKey: "prove",
+  },
+  {
+    n: "03",
+    tagline: "規律",
+    headline: "勝者は「監査可能な ROI」と「ガバナンス先行」",
+    contentKey: "discipline",
+  },
+];
+
+// =============================================================
+// §integration — AI と既存業務の接続パターン
+// =============================================================
+
+export const integration: IntegrationBlock = {
+  patterns: [
+    {
+      id: "api",
+      tag: "本命",
+      tagTone: "primary",
+      title: "① API 連携",
+      subtitle: "Established · 中長期の唯一の本命",
+      contentKey: "api",
+      defList: [
+        { term: "データ鮮度", detail: "リアルタイム" },
+        {
+          term: "必要基盤",
+          detail: "API カタログ・データガバナンス・認証基盤",
+        },
+      ],
+    },
+    {
+      id: "mq",
+      tag: "次点",
+      tagTone: "info",
+      title: "② Azure Logic Apps + MQ",
+      subtitle: "Established · API の次点となる主要パターン",
+      contentKey: "mq",
+      defList: [
+        { term: "データ鮮度", detail: "ほぼリアルタイム (非同期)" },
+        {
+          term: "必要基盤",
+          detail: "クラウドテナント · データ境界管理 · MQ 監視",
+        },
+      ],
+    },
+    {
+      id: "agent",
+      tag: "新興",
+      tagTone: "neutral",
+      title: "③ AI Agent / Computer Use",
+      subtitle: "Emerging · POC 必須",
+      contentKey: "agent",
+      defList: [
+        { term: "データ鮮度", detail: "リアルタイム" },
+        { term: "必要基盤", detail: "人間承認・操作ログ・段階的自律化" },
+      ],
+    },
+  ],
+  fallbackAspects: [
+    {
+      aspect: "位置付け",
+      rpa: "最終手段 (要 API モダナイズ並行)",
+      dbCopy: "参照専用 (判断業務には使わない)",
+    },
+    { aspect: "データ鮮度", rpa: "リアルタイム", dbCopy: "日次" },
+    {
+      aspect: "用途",
+      rpa: "主要 3 パターン不可、UI 安定の定型処理 (帳票転記・決済照合等)",
+      dbCopy: "完全に閉じたレガシー DB から参照データのみ取り込む",
+    },
+    {
+      aspect: "必要基盤",
+      rpa: "UI 変更管理・RPA 監視基盤・業務手順文書化",
+      dbCopy: "DB スナップショット · 整合性検査 · プライバシー設計",
+    },
+    {
+      aspect: "弱点 / 留意点",
+      rpa: "UI 変更で停止、保守コストが蓄積 — 長期戦略にしない",
+      dbCopy: "日次バッチで即時判断不可、判断業務には使わない",
+    },
+  ],
+  foundations: [
+    {
+      n: "01",
+      title: "データインフラ",
+      contentKey: "data-infra",
+    },
+    {
+      n: "02",
+      title: "業務マニュアルの構造化",
+      contentKey: "manual-structure",
+    },
+    {
+      n: "03",
+      title: "承認・監査プロセス",
+      contentKey: "approval-audit",
+    },
+    {
+      n: "04",
+      title: "段階的な信頼度モデル",
+      contentKey: "trust-model",
+    },
+  ],
+  hitlSteps: [
+    {
+      step: 1,
+      title: "基本マニュアル投入",
+      detail: "既存業務マニュアルを AI に読み込ませ、各手順を構造化",
+    },
+    {
+      step: 2,
+      title: "人間承認下で実行",
+      detail: "AI が業務を実行、各重要ステップで担当者が確認・承認",
+    },
+    {
+      step: 3,
+      title: "修正コメントの蓄積",
+      detail:
+        "AI が誤った操作をした際、担当者が「ここは切り捨て」等の修正コメントをその場で残す",
+    },
+    {
+      step: 4,
+      title: "HITL レビュー → 業務マニュアル正式更新",
+      detail:
+        "蓄積された修正コメントを人間 (担当者・業務責任者) がレビューし、正式に承認。承認された内容を業務マニュアルに反映し、組織のナレッジとして公式化する継続改善ループ",
+    },
+    {
+      step: 5,
+      title: "信頼度の段階的進化",
+      detail:
+        "一定期間正確な処理が続いた業務は、承認ポイントを段階的に削減 (supervised → checkpoint → autonomous)",
+    },
+  ],
+  ops: [
+    { title: "Human-in-the-Loop (HITL)", contentKey: "hitl" },
+    { title: "LLMOps", contentKey: "llmops" },
+    {
+      title: "新セキュリティ脅威 (Prompt Injection 等)",
+      contentKey: "security",
+    },
+  ],
+};
+
+// =============================================================
+// §players — JPMC 4-year AI trajectory (2022 → 2026)
+// =============================================================
+
+export const jpmcTimeline: JpmcTimelineEntry[] = [
+  { year: "2022", milestone: "AI/ML 専門チーム 2,000 人超、LLM 早期実験", value: "–" },
+  {
+    year: "2023",
+    milestone: "LLM Suite 内部展開開始、AI 専用投資 $10 億に拡大",
+    value: "AI 実装率 ~20%",
+  },
+  {
+    year: "2024",
+    milestone: "AI ユースケース 300 超本番稼働、年間価値 $10 億到達",
+    value: "300+ use cases / $1B value",
+  },
+  {
+    year: "2025",
+    milestone: "LLM Suite 20 万人超展開、AI 専用投資 $20 億 (1:1 ROI)",
+    value: "$2B invest / $2B value",
+  },
+  {
+    year: "2026",
+    milestone: "AI ユースケース 450 超、Talent / Innovation 両軸で Evident #1",
+    value: "450+ use cases",
+  },
+];
+
+// =============================================================
+// §principles — Moat comparison (JPMC vs regional bank)
+// =============================================================
+
+export const moatComparison: MoatDimension[] = [
+  {
+    dimension: "資本投下 (年間テック予算)",
+    leader: "$180–198 億",
+    regional: "$5–20 億",
+  },
+  {
+    dimension: "AI 人材 (専門チーム規模)",
+    leader: "2,000+ 人",
+    regional: "50–200 人",
+  },
+  {
+    dimension: "データ資産 (年間顧客取引 + サービス契約)",
+    leader: "数千億件規模",
+    regional: "数十億件規模",
+  },
+];
+
+// =============================================================
+// §why-now — 7 AI investment / adoption metrics
+// =============================================================
+
+export const whyNowMetrics: WhyNowMetric[] = [
+  {
+    indicator: "AI 投資のテック予算比率",
+    value: "12% → 16%",
+    sub: "(2024 → 2025)",
+    subTone: "muted",
+    citationId: 3,
+    source: "Accenture",
+  },
+  {
+    indicator: "AI 規模化に成功した金融機関",
+    value: "34%",
+    sub: "(残り 66% は試験段階)",
+    subTone: "muted",
+    citationId: 3,
+    source: "Accenture",
+  },
+  {
+    indicator: "EBIT を 5% 以上押し上げた AI ハイパフォーマー",
+    value: "約 5.5%",
+    citationId: 4,
+    source: "McKinsey",
+  },
+  {
+    indicator: "試験から本番展開への移行成功率",
+    value: "約 23%",
+    citationId: 4,
+    source: "McKinsey",
+  },
+  {
+    indicator: "AI ガバナンス枠組み導入 / 計画率",
+    value: "84%",
+    citationId: 1,
+    source: "WEF",
+  },
+  {
+    indicator: "AI 規制を 2025–2026 年に更新した国数",
+    value: "28 カ国",
+    citationId: 2,
+    source: "世銀 / IMF",
+  },
+  {
+    indicator: "金融サービス AI 支出 (2023 → 2027)",
+    value: "$350 億 → $970 億",
+    sub: "▲ 約 2.8 倍",
+    subTone: "up",
+    citationId: 1,
+    source: "WEF",
+  },
+];
+
+// =============================================================
+// §closing — 3 self-assessment questions
+// =============================================================
+
+export const closing: ClosingBlock = {
+  questions: [
+    { n: 1, contentKey: "audit" },
+    { n: 2, contentKey: "governance" },
+    { n: 3, contentKey: "distill" },
+  ],
+};
+
 export const bankingReport = {
   hero,
+  tldr,
   industryImpact,
   players,
   evidentTop10,
   roiDomains,
   roiDomainsSummary,
+  whyNowMetrics,
+  jpmcTimeline,
+  moatComparison,
+  integration,
   consulting,
   timeline,
   principles,
+  closing,
   sources,
 } as const;

@@ -35,6 +35,10 @@ export default defineConfig({
           __dirname,
           "clarity-app/process-catalog/index.html",
         ),
+        saasDashboard: resolve(
+          __dirname,
+          "clarity-app/saas-dashboard/index.html",
+        ),
       },
     },
   },

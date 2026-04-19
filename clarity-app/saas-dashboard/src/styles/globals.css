@@ -1,17 +1,15 @@
-/* ai-banking-report Clarity view — consumer globals.
+/* SaaS dashboard consumer globals — Clarity full-dimension bridge.
  *
- * Bridge pattern per feedback_lucent_theme_bridge.md:
- *   1. @import "tailwindcss" — Tailwind v4 runtime
- *   2. @import "@clarity-ds/core/variables" — Clarity CSS custom properties (tokens)
- *   3. @theme inline { ... } — re-declare Tailwind utility mappings consumer-side
- *
- * Without @theme inline, Tailwind v4 silently skips utility generation —
- * bg-primary / shadow-sys-sm / text-lead wouldn't exist.
+ * Includes all T1-T9 Charter Fullness additions:
+ *   - Gradient utilities (brand / brand-soft / ai / text-shimmer)
+ *   - Blur tokens (soft / strong)
+ *   - AI accent color
+ *   - Keyframes for ambient polish (beam-rotate / shimmer-sweep / glare-sweep)
  */
 
 @import "tailwindcss";
 @import "@clarity-ds/core/variables";
-@source "../../../node_modules/@clarity-ds/core/dist";
+@source "../../../../node_modules/@clarity-ds/core/dist";
 
 @theme inline {
   /* Color */
@@ -69,11 +67,14 @@
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);
   --radius-lg: var(--radius-lg);
+  --radius-full: var(--radius-full);
 
   /* Shadow */
   --shadow-sys-sm: var(--shadow-sys-sm);
   --shadow-sys-md: var(--shadow-sys-md);
   --shadow-sys-lg: var(--shadow-sys-lg);
+  --shadow-hover: var(--shadow-hover);
+  --shadow-glow: var(--shadow-glow);
 
   /* Motion */
   --duration-instant: var(--duration-instant);
@@ -84,23 +85,26 @@
   --ease-out: var(--ease-out);
   --ease-in-out: var(--ease-in-out);
   --ease-spring: var(--ease-spring);
+  --ease-spring-soft: var(--ease-spring-soft);
 
-  /* ===== Probe additions (Charter Fullness Probe 2026-04-18) ===== */
-  /* Shape */
-  --radius-full: var(--radius-full);
-  /* Color: stat accent (StatCard variants) */
+  /* Stat accent */
   --color-stat-alt: var(--color-stat-alt);
   --color-stat-good: var(--color-stat-good);
   --color-stat-warn: var(--color-stat-warn);
-  /* Shadow: hover + glow */
-  --shadow-hover: var(--shadow-hover);
-  --shadow-glow: var(--shadow-glow);
-  /* Motion: spring-soft */
-  --ease-spring-soft: var(--ease-spring-soft);
+
   /* Iconography */
   --icon-size-sm: var(--icon-size-sm);
   --icon-size-md: var(--icon-size-md);
   --icon-size-lg: var(--icon-size-lg);
+
+  /* ===== Charter Fullness T1-T9 utility exposure ===== */
+  --background-image-gradient-brand: var(--gradient-brand);
+  --background-image-gradient-brand-soft: var(--gradient-brand-soft);
+  --background-image-gradient-ai: var(--gradient-ai);
+  --background-image-gradient-text-shimmer: var(--gradient-text-shimmer);
+  --blur-soft: var(--blur-amount);
+  --blur-strong: var(--blur-amount-strong);
+  --color-ai-accent: var(--ai-accent);
 }
 
 @layer base {
@@ -117,7 +121,7 @@
 
   body {
     font-size: var(--text-base);
-    line-height: 1.75;
+    line-height: 1.6;
     background: var(--background);
     color: var(--foreground);
     margin: 0;
@@ -125,8 +129,7 @@
 
   em {
     font-style: normal;
-    font-weight: 700;
-    color: var(--primary-strong);
+    font-weight: 600;
   }
 
   :focus-visible {
@@ -139,5 +142,88 @@
 @layer utilities {
   .tabular-nums {
     font-variant-numeric: tabular-nums;
+  }
+  .bg-gradient-brand {
+    background-image: var(--gradient-brand);
+  }
+  .bg-gradient-brand-soft {
+    background-image: var(--gradient-brand-soft);
+  }
+  .bg-gradient-ai {
+    background-image: var(--gradient-ai);
+  }
+
+  /* Hover-lift — Charter Micro-Polish § micro-interactions */
+  .hover-lift {
+    transition:
+      box-shadow var(--duration-fast) var(--ease-out),
+      transform var(--duration-fast) var(--ease-out);
+    will-change: transform;
+  }
+  .hover-lift:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hover-lift:hover {
+      transform: none;
+    }
+  }
+
+  @keyframes clarity-pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 currentColor;
+    }
+    100% {
+      box-shadow: 0 0 0 10px transparent;
+    }
+  }
+  @keyframes clarity-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes clarity-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .tab-panel-enter {
+    animation: clarity-fade-in var(--duration-normal) var(--ease-out);
+  }
+
+  @keyframes clarity-beam-rotate {
+    from {
+      --beam-angle: 0deg;
+    }
+    to {
+      --beam-angle: 360deg;
+    }
+  }
+  @keyframes clarity-shimmer-sweep {
+    from {
+      background-position: 200% 50%;
+    }
+    to {
+      background-position: -50% 50%;
+    }
+  }
+  @keyframes clarity-glare-sweep {
+    from {
+      transform: translateX(-120%) skewX(-20deg);
+    }
+    to {
+      transform: translateX(220%) skewX(-20deg);
+    }
+  }
+  @property --beam-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
   }
 }
